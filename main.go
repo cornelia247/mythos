@@ -22,7 +22,7 @@ func showMyth(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	fmt.Fprintf(w, "Displaying A specific Myth with ID %d ...", id)
+	fmt.Fprintf(w, "Displaying A specific Myth withd ID %d ...", id)
 }
 func createMyth(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {

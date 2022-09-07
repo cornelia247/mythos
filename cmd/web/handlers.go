@@ -21,12 +21,12 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 	}
 	ts, err := template.ParseFiles(files...)
 	if err != nil {
-		app.severError(w, err)
+		app.serverError(w, err)
 		return
 	}
 	err = ts.Execute(w, nil)
 	if err != nil {
-		app.severError(w, err)
+		app.serverError(w, err)
 	}
 }
 
@@ -45,5 +45,15 @@ func (app *application) createMyth(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Write([]byte("Creating a new Myth .."))
+	title := "0 snail"
+	content := "0 snail\n Climb Mount Fuji,\nBut slowly, slowly! \n\n-kobayashi Issa"
+	expires := "7"
+
+	id, err := app.myths.Insert(title, content, expires)
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
+	http.Redirect(w, r, fmt.Sprintf("/myth?id=%d", id), http.StatusSeeOther)
 }
